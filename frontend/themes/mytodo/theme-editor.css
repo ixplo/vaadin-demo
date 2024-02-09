@@ -1,0 +1,13 @@
+/*
+ * This file has been created by the Vaadin Theme Editor. Please note that
+ * manual changes to individual CSS properties may be overwritten by the theme editor.
+ */
+vaadin-button.main-view-button-1 {
+  --lumo-button-size:var(--lumo-size-m);
+  border-style:solid;
+  border-width:1px;
+}
+
+vaadin-grid.main-view-grid-1::part(body-cell) { font-size:12px; }
+
+vaadin-grid.main-view-grid-1::part(header-cell) { --lumo-font-size-s:var(--lumo-font-size-m); }
