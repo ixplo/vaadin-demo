@@ -2,6 +2,7 @@ package com.example.application.views.main;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.example.application.views.main.model.Person;
+import com.example.application.views.main.wrapper.FileDownloadWrapper;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -14,7 +15,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
-import org.vaadin.olli.FileDownloadWrapper;
 
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
