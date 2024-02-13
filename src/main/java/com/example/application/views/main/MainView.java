@@ -1,6 +1,7 @@
 package com.example.application.views.main;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.example.application.views.main.excel.ExcelUtil;
 import com.example.application.views.main.model.Person;
 import com.example.application.views.main.wrapper.FileDownloadWrapper;
 import com.vaadin.flow.component.Key;
@@ -29,6 +30,7 @@ public class MainView extends HorizontalLayout {
     TextField name;
     Button sayHello;
     FileDownloadWrapper buttonWrapper;
+    byte[] gridContent = new byte[0];
     Text text;
     Grid<Person> grid;
     Grid.Column<Person> viewColumn;
@@ -48,8 +50,9 @@ public class MainView extends HorizontalLayout {
 
     private void configureDownloadButton() {
         Button downloadButton = new Button("Click to download");
+        gridContent = ExcelUtil.prepare(Person.class, grid.getGenericDataView().getItems());
         buttonWrapper = new FileDownloadWrapper(
-                new StreamResource("foo.txt", () -> new ByteArrayInputStream("foo".getBytes())));
+                new StreamResource("GridDetails.xlsx", () -> new ByteArrayInputStream(gridContent)));
         buttonWrapper.wrapComponent(downloadButton);
     }
 
