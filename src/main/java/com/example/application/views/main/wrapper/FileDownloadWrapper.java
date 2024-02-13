@@ -18,10 +18,6 @@ import com.vaadin.flow.component.template.Id;
 
 @Tag("file-download-wrapper")
 @JsModule("./file-download-wrapper.js")
-@NpmPackage(
-        value = "@vaadin/virtual-list",
-        version = "23.3.6"
-)
 public class FileDownloadWrapper extends LitTemplate implements HasSize {
 
     @Id("download-link")
