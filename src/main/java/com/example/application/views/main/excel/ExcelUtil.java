@@ -1,7 +1,6 @@
 package com.example.application.views.main.excel;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.example.application.views.main.model.Person;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;

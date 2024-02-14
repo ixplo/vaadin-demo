@@ -20,6 +20,7 @@ import com.vaadin.flow.server.StreamResource;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 @PageTitle("Main")
@@ -37,23 +38,23 @@ public class MainView extends HorizontalLayout {
     ConfirmDialog dialog = new ConfirmDialog();
     private Integer counter = 0;
 
-    public MainView() {
+    public MainView(FileDownloadWrapper wrapper) {
         name = new TextField("Your name");
         text = new Text("Before");
         configureHelloButton();
         configureGrid();
-        configureDownloadButton();
+        configureDownloadButton(wrapper);
         setVerticalComponentAlignment(Alignment.BASELINE, name, sayHello);
         setHeight("500px");
         add(name, sayHello, text, grid, buttonWrapper);
     }
 
-    private void configureDownloadButton() {
+    private void configureDownloadButton(FileDownloadWrapper buttonWrapper) {
         Button downloadButton = new Button("Click to download");
         gridContent = ExcelUtil.prepare(Person.class, grid.getGenericDataView().getItems());
-        buttonWrapper = new FileDownloadWrapper(
-                new StreamResource("GridDetails.xlsx", () -> new ByteArrayInputStream(gridContent)));
-        buttonWrapper.wrapComponent(downloadButton);
+        this.buttonWrapper = Objects.requireNonNullElseGet(buttonWrapper, () -> new FileDownloadWrapper(
+                new StreamResource("GridDetails.xlsx", () -> new ByteArrayInputStream(gridContent))));
+        this.buttonWrapper.wrapComponent(downloadButton);
     }
 
     private void configureHelloButton() {

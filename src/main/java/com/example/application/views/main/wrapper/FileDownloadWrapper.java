@@ -1,20 +1,13 @@
 package com.example.application.views.main.wrapper;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.template.Id;
+import com.vaadin.flow.server.StreamResource;
 
 @Tag("file-download-wrapper")
 @JsModule("./file-download-wrapper.js")
@@ -23,24 +16,8 @@ public class FileDownloadWrapper extends LitTemplate implements HasSize {
     @Id("download-link")
     protected Anchor anchor;
 
-    protected FileDownloadWrapper() {
+    public FileDownloadWrapper() {
         anchor.getElement().setAttribute("download", true);
-    }
-
-    protected FileDownloadWrapper(String fileName) {
-        this();
-        setFileName(fileName);
-
-    }
-
-    public FileDownloadWrapper(String fileName, File file) {
-        this(fileName);
-        setFile(file);
-    }
-
-    public FileDownloadWrapper(String fileName, DownloadBytesProvider provider) {
-        this(fileName);
-        setBytesProvider(fileName, provider);
     }
 
     public FileDownloadWrapper(StreamResource streamResource) {
@@ -48,20 +25,8 @@ public class FileDownloadWrapper extends LitTemplate implements HasSize {
         setResource(streamResource);
     }
 
-    public void setFileName(String fileName) {
-        getModel().setFileName(fileName);
-    }
-
     public void setResource(StreamResource streamResource) {
         anchor.setHref(streamResource);
-    }
-
-    public void setBytesProvider(String fileName, DownloadBytesProvider provider) {
-        setResource(new StreamResource(fileName, () -> new ByteArrayInputStream(provider.getBytes())));
-    }
-
-    public void setText(String text) {
-        anchor.setText(text);
     }
 
     public void wrapComponent(Component component) {
@@ -71,41 +36,4 @@ public class FileDownloadWrapper extends LitTemplate implements HasSize {
         }
     }
 
-    private InputStream createResource(File file) {
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException fnfe) {
-            throw new IllegalArgumentException(fnfe);
-        }
-    }
-
-    public void setFile(File file) {
-        anchor.setHref(new StreamResource(getModel().getFileName(), () -> createResource(file)));
-    }
-
-    @FunctionalInterface
-    public interface DownloadBytesProvider {
-
-        byte[] getBytes();
-    }
-
-    public interface FileDownloadWrapperModel {
-        String getFileName();
-
-        void setFileName(String fileName);
-    }
-
-	private FileDownloadWrapperModel getModel() {
-		return new FileDownloadWrapperModel() {
-			@Override
-			public void setFileName(String fileName) {
-				getElement().setProperty("fileName", fileName);
-			}
-
-			@Override
-			public String getFileName() {
-				return getElement().getProperty("fileName", null);
-			}
-		};
-	}
 }
